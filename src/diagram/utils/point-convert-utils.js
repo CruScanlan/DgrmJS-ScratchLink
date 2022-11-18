@@ -27,7 +27,6 @@ export function pointViewToCanvas(canvasPosition, scale, point) {
  * @returns {Point}
  */
 export function pointCanvasToView(canvasPosition, scale, point) {
-	console.log(canvasPosition, scale, point)
 	return {
 		//@ts-ignore
 		x: (point.x) * scale + (canvasPosition.x + window.dgrmOffsetX),
