@@ -66,6 +66,8 @@ export class AppShapeEditorDecorator extends SvgShapeTextEditorDecorator {
 		super.onEditLeave();
 		this.svgEl.classList.remove('highlighted');
 		pnlDel(this);
+		//@ts-ignore
+		this.diagram.dispatch('text', this.svgElement);
 	}
 
 	/** @private */

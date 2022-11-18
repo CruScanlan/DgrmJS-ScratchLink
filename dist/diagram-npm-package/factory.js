@@ -2367,6 +2367,8 @@ var AppShapeEditorDecorator = /*#__PURE__*/function (_SvgShapeTextEditorDe) {
       _get(_getPrototypeOf(AppShapeEditorDecorator.prototype), "onEditLeave", this).call(this);
       this.svgEl.classList.remove('highlighted');
       pnlDel(this);
+      //@ts-ignore
+      this.diagram.dispatch('text', this.svgElement);
     }
 
     /** @private */
