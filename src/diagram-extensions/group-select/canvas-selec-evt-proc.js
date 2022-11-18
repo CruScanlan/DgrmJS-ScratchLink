@@ -272,6 +272,11 @@ const rectStartElem = Symbol(0);
 function rectCreate(svg, position) {
 	// TODO: check positon if SVG is not full screen
 
+	//@ts-ignore
+	position.x = position.x - window.dgrmOffsetX;
+	//@ts-ignore
+	position.y = position.y - window.dgrmOffsetY;
+
 	const selectRect = /** @type {SelectRect} */(elemCreateByTemplate(svg, 'select'));
 	selectRect.x.baseVal.value = position.x;
 	selectRect.y.baseVal.value = position.y;
@@ -295,17 +300,19 @@ function rectDraw(selectRect, evt) {
 		delete selectRect[rectStartElem];
 	}
 
-	const x = evt.detail.clientX - selectRect[rectStartPoint].x;
-	const y = evt.detail.clientY - selectRect[rectStartPoint].y;
+	//@ts-ignore
+	const x = evt.detail.clientX - selectRect[rectStartPoint].x - window.dgrmOffsetX;
+	//@ts-ignore
+	const y = evt.detail.clientY - selectRect[rectStartPoint].y - window.dgrmOffsetY;
 
 	selectRect.width.baseVal.value = Math.abs(x);
-	if (x < 0) {
-		selectRect.x.baseVal.value = evt.detail.clientX;
+	if (x < 0) {//@ts-ignore
+		selectRect.x.baseVal.value = evt.detail.clientX - window.dgrmOffsetX;
 	}
 
 	selectRect.height.baseVal.value = Math.abs(y);
-	if (y < 0) {
-		selectRect.y.baseVal.value = evt.detail.clientY;
+	if (y < 0) {//@ts-ignore
+		selectRect.y.baseVal.value = evt.detail.clientY - window.dgrmOffsetY;
 	}
 }
 

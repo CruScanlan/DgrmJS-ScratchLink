@@ -54,8 +54,10 @@ export function svgScale(svgEl, fixedPoint, scale, nextScale) {
 	const position = svgPositionGet(svgEl);
 
 	svgPositionSet(svgEl, {
-		x: nextScale / scale * (position.x - fixedPoint.x) + fixedPoint.x,
-		y: nextScale / scale * (position.y - fixedPoint.y) + fixedPoint.y
+		//@ts-ignore
+		x: nextScale / scale * (position.x - (fixedPoint.x - window.dgrmOffsetX)) + (fixedPoint.x - window.dgrmOffsetX),
+		//@ts-ignore
+		y: nextScale / scale * (position.y - (fixedPoint.y - window.dgrmOffsetY)) + (fixedPoint.y - window.dgrmOffsetY)
 	});
 
 	ensureTransform(svgEl, SVGTransform.SVG_TRANSFORM_SCALE)

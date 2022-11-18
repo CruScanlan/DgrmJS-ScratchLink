@@ -11,6 +11,7 @@
   "author": "Alexey Boyko",
   "license": "ISC",
   "devDependencies": {
+    "@rollup/plugin-babel": "^6.0.2",
     "@rollup/plugin-replace": "^5.0.1",
     "eslint": "^8.27.0",
     "eslint-config-standard": "^17.0.0",
@@ -22,5 +23,9 @@
     "rollup-plugin-minify-html-literals": "^1.2.6",
     "rollup-plugin-terser": "^7.0.2",
     "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "@babel/core": "^7.20.2",
+    "@babel/preset-env": "^7.20.2"
   }
 }
