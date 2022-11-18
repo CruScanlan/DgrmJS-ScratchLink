@@ -789,9 +789,11 @@ function pngDgrmCreate(svg, callBack, dgrmChunkVal) {
   var canvasElVirtual = svgVirtual.querySelector('[data-key="canvas"]');
   var canvasElVirtualPosition = svgPositionGet(canvasElVirtual);
   svgPositionSet(canvasElVirtual, {
-    x: canvasElVirtualPosition.x + 15 * scale - rectToShow.x,
+    //@ts-ignore
+    x: canvasElVirtualPosition.x + 15 * scale - rectToShow.x + window.dgrmOffsetX,
     // padding 15px
-    y: canvasElVirtualPosition.y + 15 * scale - rectToShow.y
+    //@ts-ignore
+    y: canvasElVirtualPosition.y + 15 * scale - rectToShow.y + window.dgrmOffsetY
   });
   svgScale(canvasElVirtual, {
     x: 0,
