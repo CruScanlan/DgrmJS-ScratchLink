@@ -12,6 +12,7 @@ import { connectorsInit, shapeCreate } from '../../../diagram/svg-presenter/svg-
 import { pathCreate } from '../../../diagram/svg-presenter/svg-path/svg-path-factory.js';
 
 import { AppCircleDecorator } from '../shapes/app-circle-decorator.js';
+import { AppConnectorNodeDecorator } from '../shapes/app-connector-node-decorator.js';
 import { AppRectDecorator } from '../shapes/app-rect-decorator.js';
 import { AppRhombDecorator } from '../shapes/app-rhomb-decorator.js';
 import { AppPathEditiorDecorator } from '../shapes/app-path-editior-decorator.js';
@@ -52,6 +53,7 @@ export function appDiagramFactory(svg) {
 						case 'rhomb': shape = new AppRhombDecorator(diagram, shape, /** @type {IAppShapeData} */(param.createParams)); break;
 						case 'rect': shape = new AppRectDecorator(diagram, shape, /** @type {IAppShapeData} */(param.createParams)); break;
 						case 'text': shape = new AppRectDecorator(diagram, shape, /** @type {IAppShapeData} */(param.createParams), { resizeFromCenter: false }); break;
+						case 'connectorNode': shape = new AppConnectorNodeDecorator(diagram, shape, /** @type {IAppShapeData} */(param.createParams)); break;
 						case 'connect-end': break;
 					}
 

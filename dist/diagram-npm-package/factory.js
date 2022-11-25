@@ -2651,6 +2651,154 @@ var AppCircleDecorator = /*#__PURE__*/function (_AppShapeEditorDecora) {
   return AppCircleDecorator;
 }(AppShapeEditorDecorator);
 
+var AppConnectorNodeDecorator = /*#__PURE__*/function (_AppShapeEditorDecora) {
+  _inherits(AppConnectorNodeDecorator, _AppShapeEditorDecora);
+  var _super = _createSuper(AppConnectorNodeDecorator);
+  /**
+   * @param {IDiagram} diagram
+   * @param {ISvgPresenterShape} svgShape
+   * @param {IAppShapeData} addParam
+   */
+  function AppConnectorNodeDecorator(diagram, svgShape, addParam) {
+    var _this;
+    _classCallCheck(this, AppConnectorNodeDecorator);
+    _this = _super.call(this, diagram, svgShape, addParam);
+
+    /** @private */
+    _this._currentRadius = 24;
+    return _this;
+  }
+
+  /**
+   * @param {SVGTextElement} textEl
+   * @param {DiagramShapeProps} updatedProp
+   * private
+   */
+  _createClass(AppConnectorNodeDecorator, [{
+    key: "onTextChange",
+    value: function onTextChange(textEl, updatedProp) {
+      var maxRadiusQrt = 0;
+      var _iterator = _createForOfIteratorHelper(textEl.getElementsByTagName('tspan')),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var span = _step.value;
+          var _iterator2 = _createForOfIteratorHelper(boxPoints(span.getBBox())),
+            _step2;
+          try {
+            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+              var point = _step2.value;
+              var r = Math.pow(point.x, 2) + Math.pow(point.y, 2);
+              if (r > maxRadiusQrt) {
+                maxRadiusQrt = r;
+              }
+            }
+          } catch (err) {
+            _iterator2.e(err);
+          } finally {
+            _iterator2.f();
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+      var newRadius = ceil(24, 12, Math.sqrt(maxRadiusQrt));
+      if (newRadius !== this._currentRadius) {
+        this._currentRadius = newRadius;
+        this._resize(newRadius);
+        this.panelUpdPos();
+      }
+    }
+
+    /**
+     * @private
+     * @param {number} mainRadius
+     */
+  }, {
+    key: "_resize",
+    value: function _resize(mainRadius) {
+      var radNegative = -1 * mainRadius;
+      var cons = {
+        right: {
+          cx: mainRadius
+        },
+        left: {
+          cx: radNegative
+        },
+        bottom: {
+          cy: mainRadius
+        },
+        top: {
+          cy: radNegative
+        }
+      };
+      var consData = {
+        right: {
+          innerPosition: {
+            x: mainRadius,
+            y: 0
+          }
+        },
+        left: {
+          innerPosition: {
+            x: radNegative,
+            y: 0
+          }
+        },
+        bottom: {
+          innerPosition: {
+            x: 0,
+            y: mainRadius
+          }
+        },
+        top: {
+          innerPosition: {
+            x: 0,
+            y: radNegative
+          }
+        }
+      };
+      this.diagram.shapeUpdate(this, {
+        // visability
+        props: {
+          main: {
+            r: mainRadius
+          },
+          outer: {
+            r: mainRadius + 12
+          },
+          // out connectors
+          outright: cons.right,
+          outleft: cons.left,
+          outbottom: cons.bottom,
+          outtop: cons.top,
+          // in connectors
+          inright: cons.right,
+          inleft: cons.left,
+          inbottom: cons.bottom,
+          intop: cons.top
+        },
+        // connectors data
+        connectors: {
+          // out
+          outright: consData.right,
+          outleft: consData.left,
+          outbottom: consData.bottom,
+          outtop: consData.top,
+          // in
+          inright: consData.right,
+          inleft: consData.left,
+          inbottom: consData.bottom,
+          intop: consData.top
+        }
+      });
+    }
+  }]);
+  return AppConnectorNodeDecorator;
+}(AppShapeEditorDecorator);
+
 var AppRectDecorator = /*#__PURE__*/function (_AppShapeEditorDecora) {
   _inherits(AppRectDecorator, _AppShapeEditorDecora);
   var _super = _createSuper(AppRectDecorator);
@@ -4211,6 +4359,9 @@ function appDiagramFactory(svg) {
               shape = new AppRectDecorator(diagram, shape, /** @type {IAppShapeData} */param.createParams, {
                 resizeFromCenter: false
               });
+              break;
+            case 'connectorNode':
+              shape = new AppConnectorNodeDecorator(diagram, shape, /** @type {IAppShapeData} */param.createParams);
               break;
           }
           param.svgElemToPresenterObj.set(shape.svgEl, shape);
