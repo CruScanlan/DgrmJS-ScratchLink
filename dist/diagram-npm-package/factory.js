@@ -2665,7 +2665,7 @@ var AppConnectorNodeDecorator = /*#__PURE__*/function (_AppShapeEditorDecora) {
     _this = _super.call(this, diagram, svgShape, addParam);
 
     /** @private */
-    _this._currentRadius = 24;
+    _this._currentRadius = 12;
     return _this;
   }
 
@@ -2704,7 +2704,7 @@ var AppConnectorNodeDecorator = /*#__PURE__*/function (_AppShapeEditorDecora) {
       } finally {
         _iterator.f();
       }
-      var newRadius = ceil(24, 12, Math.sqrt(maxRadiusQrt));
+      var newRadius = ceil(12, 6, Math.sqrt(maxRadiusQrt));
       if (newRadius !== this._currentRadius) {
         this._currentRadius = newRadius;
         this._resize(newRadius);
@@ -2767,7 +2767,7 @@ var AppConnectorNodeDecorator = /*#__PURE__*/function (_AppShapeEditorDecora) {
             r: mainRadius
           },
           outer: {
-            r: mainRadius + 12
+            r: mainRadius + 6
           },
           // out connectors
           outright: cons.right,
