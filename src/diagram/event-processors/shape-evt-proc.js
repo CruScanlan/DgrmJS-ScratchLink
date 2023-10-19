@@ -53,6 +53,12 @@ export class ShapeEvtProc {
 					this._diagram.del(shape);
 					shapeStateDel(path, 'disabled');
 					shape = null;
+				} else if(shape.connectable && /** @type {IPresenterConnector} */(evt.detail.target).type === 'canvas') {
+					//Connector dropped onto canvas and not connected to anything
+					const path = first(shape.connectedPaths);
+					this._diagram.del(shape);
+					shapeStateDel(path, 'disabled');
+					shape = null;
 				}
 
 				this._clean(shape);

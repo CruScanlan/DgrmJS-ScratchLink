@@ -43,7 +43,6 @@ export class ConnectorEvtProc {
 					case 'in': {
 						//
 						// disconnect
-
 						const path = (this._diagram.selected?.type === 'path' && /** @type {IPresenterPath} */(this._diagram.selected).end === connector)
 							? /** @type {IPresenterPath} */(this._diagram.selected)
 							: last(connector.shape.connectedPaths, pp => pp.end === connector);

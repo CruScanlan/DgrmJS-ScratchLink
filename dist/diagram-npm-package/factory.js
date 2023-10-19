@@ -3404,6 +3404,12 @@ var ShapeEvtProc = /*#__PURE__*/function () {
             this._diagram.del(shape);
             shapeStateDel(path, 'disabled');
             shape = null;
+          } else if (shape.connectable && /** @type {IPresenterConnector} */evt.detail.target.type === 'canvas') {
+            //Connector dropped onto canvas and not connected to anything
+            var _path = first(shape.connectedPaths);
+            this._diagram.del(shape);
+            shapeStateDel(_path, 'disabled');
+            shape = null;
           }
           this._clean(shape);
           break;
@@ -3605,7 +3611,6 @@ var ConnectorEvtProc = /*#__PURE__*/function () {
                 var _this$_diagram$select;
                 //
                 // disconnect
-
                 var path = ((_this$_diagram$select = this._diagram.selected) === null || _this$_diagram$select === void 0 ? void 0 : _this$_diagram$select.type) === 'path' && /** @type {IPresenterPath} */this._diagram.selected.end === connector ? /** @type {IPresenterPath} */this._diagram.selected : last(connector.shape.connectedPaths, function (pp) {
                   return pp.end === connector;
                 });
