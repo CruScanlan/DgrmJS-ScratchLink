@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+	"link": "yarn link",
     "lint": "eslint src/**/*.js",
     "tscheck": "node_modules\\.bin\\tsc --noEmit -p ./jsconfig.json",
     "build": "rollup -c rollup.app.config.js",
